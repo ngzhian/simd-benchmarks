@@ -75,8 +75,8 @@ double_average.cpp is a benchmark that shows that 64x2 instructions has no
 effect. The autovectorizer cannot vetorize the addition of floats due to nan
 propagations.
 
-[0] McCutchan, John, et al. "A SIMD programming model for Dart, JavaScript, and
-other dynamically typed scripting languages." Proceedings of the 2014 Workshop
-on Programming models for SIMD/Vector processing. ACM, 2014.
+[0]: McCutchan, John, et al. "A SIMD programming model for Dart, JavaScript,
+and other dynamically typed scripting languages." Proceedings of the 2014
+Workshop on Programming models for SIMD/Vector processing. ACM, 2014.
 
-[1] https://github.com/tc39/ecmascript_simd/tree/master/src/benchmarks
+[1]: https://github.com/tc39/ecmascript_simd/tree/master/src/benchmarks
