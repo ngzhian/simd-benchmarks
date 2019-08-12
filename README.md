@@ -1,7 +1,7 @@
 # SIMD benchmarks for 64x2 operations
 
-Reusing some benchmarks from this paper [0] and elsewhere ported to cpp and
-using 64 bit types (uint64 and double) [1], compiled down to Wasm using
+Reusing some [benchmarks][1] from [this paper][0] and elsewhere ported to cpp
+and using 64 bit types (uint64 and double), compiled down to Wasm using
 Emscripten.
 
 ## Results
@@ -77,5 +77,6 @@ propagations.
 
 [0] McCutchan, John, et al. "A SIMD programming model for Dart, JavaScript, and
 other dynamically typed scripting languages." Proceedings of the 2014 Workshop
-on Programming models for SIMD/Vector processing. ACM, 2014. [1]
-https://github.com/tc39/ecmascript_simd/tree/master/src/benchmarks
+on Programming models for SIMD/Vector processing. ACM, 2014.
+
+[1] https://github.com/tc39/ecmascript_simd/tree/master/src/benchmarks
