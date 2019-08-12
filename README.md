@@ -1,18 +1,26 @@
 # SIMD benchmarks for 64x2 operations
 
-Reusing some benchmarks from the paper "A SIMD programming model for dart,
-javascript,and other dynamically typed
-scripting languages" but ported to cpp and using 64 bit types (uint64 and
-double). Source code for those benchmarks are at [0]
+Reusing some benchmarks from this paper [0] and elsewhere ported to cpp and
+using 64 bit types (uint64 and double) [1], compiled down to Wasm using
+Emscripten.
+
+## Results
+
+benchmark       | scalar (ms) | simd (ms)
+--------------- | ----------- | -----------
+matrix_multiply | 2.529000    | 0.080000
+mandelbrot      | 8198.565000 | 5507.096000
+double_sum      | 2713.226000 | 1678.963000
+int64_average   | 1561.061000 | 859.337000
 
 ## Benchmarks
 
 There are two kinds of benchmarks:
 
-1. cpp source containing normal code that is then compiled with -O3 and
-autovectorized by LLVM, generating simd instructions
-2. cpp source containing two separate implementations, one scalar and the other
-simd (using intrinsics)
+1.  cpp source containing normal code that is then compiled with -O3 and
+    autovectorized by LLVM, generating simd instructions
+2.  cpp source containing two separate implementations, one scalar and the other
+    simd (using intrinsics)
 
 The first is useful for looking at what the toolchain can do to autovectorize
 and speed up code. The second is useful when the algorithm is not simply
@@ -21,7 +29,7 @@ autovectorizable, and shows how using the intrinsics can affect performance.
 Examples of working benchmarks and how to run them:
 
 ```
-$ make matrix_multply.bench
+$ make matrix_multiply.bench
 timing (scalar): 2.529000
 timing (simd): 0.080000
 ```
@@ -67,4 +75,7 @@ double_average.cpp is a benchmark that shows that 64x2 instructions has no
 effect. The autovectorizer cannot vetorize the addition of floats due to nan
 propagations.
 
-[0] https://github.com/tc39/ecmascript_simd/tree/master/src/benchmarks
+[0] McCutchan, John, et al. "A SIMD programming model for Dart, JavaScript, and
+other dynamically typed scripting languages." Proceedings of the 2014 Workshop
+on Programming models for SIMD/Vector processing. ACM, 2014. [1]
+https://github.com/tc39/ecmascript_simd/tree/master/src/benchmarks

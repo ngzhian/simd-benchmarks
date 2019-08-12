@@ -26,6 +26,7 @@ SIMD_64_OPTS=$(SIMD_OPTS) -munimplemented-simd128
 	@$(EMCC) $(EMCC_OPTS) $< -o $@ $(SIMD_64_OPTS)
 
 %.ibench: %_intrinsics.js
+	@echo --- $*
 	@./wasm-simd-dis.sh $*_intrinsics.wasm
 	@$(D8) $(D8_FLAGS) $*_intrinsics.js
 
@@ -85,6 +86,7 @@ mandelbrot-game-gen-image: $(MANDELBROT_SRC)
 # Run the mandelbrot set benchmark and generate pbm images
 .PHONY: run-mandelbrot-game-gen-image
 run-mandelbrot-game-gen-image: mandelbrot-game-gen-image
+	@echo --- mandelbrot
 	@./wasm-simd-dis.sh $(MANDELBROT_SCALAR_OUT:.js=.wasm)
 	@./wasm-simd-dis.sh $(MANDELBROT_SIMD_OUT:.js=.wasm)
 	@time $(D8) $(D8_FLAGS) $(MANDELBROT_SCALAR_OUT) > scalar.pbm.tmp
