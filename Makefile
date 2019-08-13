@@ -49,7 +49,7 @@ matrix_multiply.bench: matrix_multiply.ibench
 %.wats: %.wat %_32.wat $.64.wat
 
 .PHONY: bench
-bench: double_sum.bench matrix_multiply.bench int64_average.bench mandelbrot.bench
+bench: matrix_multiply.bench mandelbrot.bench double_sum.bench int64_average.bench double_average.bench
 
 .PHONY: clean
 clean:
