@@ -6,6 +6,8 @@ Emscripten.
 
 ## Results
 
+x64 (Xeon(R) E5 28 cores)
+
 benchmark       | scalar (ms) | simd (ms)
 --------------- | ----------- | -----------
 matrix_multiply | 2.529000    | 0.080000
@@ -13,6 +15,16 @@ mandelbrot      | 8198.565000 | 5507.096000
 double_sum      | 2713.226000 | 1678.963000
 int64_average   | 1561.061000 | 859.337000
 double_average  | 1580.352000 | 1052.753000
+
+arm64 (Pixel 3, sdm845)
+
+benchmark       | scalar (ms)  | simd (ms)
+--------------- | ------------ | ------------
+matrix_multiply | 17.926000    | 0.004000
+mandelbrot      | 10891.265000 | 11661.831000
+double_sum      | 5204.213000  | 2819.051000
+int64_average   | 2633.133000  | 1331.012000
+double_average  | 2468.422000  | 1537.558000
 
 ## Benchmarks
 
