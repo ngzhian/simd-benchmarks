@@ -75,6 +75,41 @@ double_average.cpp is a benchmark that shows that 64x2 instructions has no
 effect. The autovectorizer cannot vetorize the addition of floats due to nan
 propagations.
 
+## Distribution of instructions
+
+A one-liner to dump 64x2 instructions used:
+
+```
+wasm-objdump -d matrix_multiply_intrinsics.wasm | awk '/64x2/ { a = substr($0, index($0, "|") + 1); sub(/ +/, "", a); print a;}' | sort | uniq -c
+```
+
+For matrix_multiply:
+
+24 f64x2.add 32 f64x2.mul 8 f64x2.replace_lane 1 8 f64x2.splat
+
+## Distribution of instructions
+
+A one-liner to dump 64x2 instructions used in benchmarks:
+
+```
+$ wasm-objdump -d matrix_multiply_intrinsics.wasm mandelbrot-game-simd.wasm double_sum_64.wasm int64_average_64.wasm | awk '/64x2/ { a = substr($0, index($0, "|") + 1); sub(/ +/, "", a); print a;}' | sort | uniq -c | sort -rn
+    193 f64x2.mul
+    181 f64x2.add
+     48 f64x2.sub
+     13 f64x2.splat
+     11 i64x2.splat
+     10 f64x2.replace_lane 1
+      8 f64x2.extract_lane 1
+      8 f64x2.extract_lane 0
+      7 i64x2.replace_lane 1
+      5 i64x2.add
+      4 i64x2.any_true
+      3 i64x2.extract_lane 0
+      2 i64x2.shr_s
+      2 i64x2.shl
+      2 i64x2.extract_lane 1
+```
+
 [0]: McCutchan, John, et al. "A SIMD programming model for Dart, JavaScript,
 and other dynamically typed scripting languages." Proceedings of the 2014
 Workshop on Programming models for SIMD/Vector processing. ACM, 2014.
