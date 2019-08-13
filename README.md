@@ -12,6 +12,7 @@ matrix_multiply | 2.529000    | 0.080000
 mandelbrot      | 8198.565000 | 5507.096000
 double_sum      | 2713.226000 | 1678.963000
 int64_average   | 1561.061000 | 859.337000
+double_average  | 1580.352000 | 1052.753000
 
 ## Benchmarks
 
@@ -71,9 +72,19 @@ timing: 859.337000
 result: 8191
 ```
 
-double_average.cpp is a benchmark that shows that 64x2 instructions has no
-effect. The autovectorizer cannot vetorize the addition of floats due to nan
-propagations.
+```
+$ make double_average.bench
+--- double_average
+v128: 0  64x2: 0 32x4:  0
+timing: 1580.352000
+result: 8191.500000
+v128: 1  64x2: 0 32x4:  6
+timing: 1605.111000
+result: 8191.500000
+v128: 3  64x2: 14 32x4:  0
+timing: 1052.753000
+result: 8191.500000
+```
 
 ## Distribution of instructions
 
@@ -92,22 +103,22 @@ For matrix_multiply:
 A one-liner to dump 64x2 instructions used in benchmarks:
 
 ```
-$ wasm-objdump -d matrix_multiply_intrinsics.wasm mandelbrot-game-simd.wasm double_sum_64.wasm int64_average_64.wasm | awk '/64x2/ { a = substr($0, index($0, "|") + 1); sub(/ +/, "", a); print a;}' | sort | uniq -c | sort -rn
+$ wasm-objdump -d matrix_multiply_intrinsics.wasm mandelbrot-game-simd.wasm double_sum_64.wasm int64_average_64.wasm double_average_64.wasm | awk '/64x2/ { a = substr($0, index($0, "|") + 1); sub(/ +/, "", a); print a;}' | sort | uniq -c | sort -rn
     193 f64x2.mul
-    181 f64x2.add
+    182 f64x2.add
      48 f64x2.sub
-     13 f64x2.splat
-     11 i64x2.splat
-     10 f64x2.replace_lane 1
-      8 f64x2.extract_lane 1
-      8 f64x2.extract_lane 0
-      7 i64x2.replace_lane 1
-      5 i64x2.add
+     15 f64x2.splat
+     12 i64x2.splat
+     11 f64x2.replace_lane 1
+      9 f64x2.extract_lane 1
+      9 f64x2.extract_lane 0
+      8 i64x2.replace_lane 1
       4 i64x2.any_true
+      4 i64x2.add
+      3 i64x2.shr_s
+      3 i64x2.shl
+      3 i64x2.extract_lane 1
       3 i64x2.extract_lane 0
-      2 i64x2.shr_s
-      2 i64x2.shl
-      2 i64x2.extract_lane 1
 ```
 
 [0]: McCutchan, John, et al. "A SIMD programming model for Dart, JavaScript,
