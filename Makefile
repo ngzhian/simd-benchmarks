@@ -107,6 +107,10 @@ mandelbrot-dart: mandel-dart.cpp
 	$(EMCC) $(MANDELBROT_GAME_OPTS) $(SIMD_64_OPTS) mandel-dart.cpp -o mandel-dart.js
 	@time $(D8) $(D8_FLAGS) mandel-dart.js
 
+# Cross compilation instructions at https://v8.dev/docs/cross-compile-arm
+# In short:
+#   gm android_arm64.release
+#   adb push out/android_arm64.release/{icudtl.dat,natives_blob.bin,snapshot_blob.bin,d8} /data/local/tmp/v8/bin
 ANDROID_D8_DIR=/data/local/tmp/v8/bin
 .PHONY: run-android-arm64
 run-android-arm64:
