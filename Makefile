@@ -106,3 +106,27 @@ mandelbrot-dart: mandel-dart.cpp
 	@time $(D8) $(D8_FLAGS) mandel-dart-scalar.js
 	$(EMCC) $(MANDELBROT_GAME_OPTS) $(SIMD_64_OPTS) mandel-dart.cpp -o mandel-dart.js
 	@time $(D8) $(D8_FLAGS) mandel-dart.js
+
+ANDROID_D8_DIR=/data/local/tmp/v8/bin
+.PHONY: run-android-arm64
+run-android-arm64:
+	@adb push matrix_multiply_intrinsics.{js,wasm} $(ANDROID_D8_DIR)
+	@adb push $(MANDELBROT_SCALAR_OUT) $(ANDROID_D8_DIR)
+	@adb push $(MANDELBROT_SCALAR_OUT:.js=.wasm) $(ANDROID_D8_DIR)
+	@adb push $(MANDELBROT_SIMD_OUT) $(ANDROID_D8_DIR)
+	@adb push $(MANDELBROT_SIMD_OUT:.js=.wasm) $(ANDROID_D8_DIR)
+	@adb push double_sum.{js,wasm} $(ANDROID_D8_DIR)
+	@adb push double_sum_64.{js,wasm} $(ANDROID_D8_DIR)
+	@adb push int64_average.{js,wasm} $(ANDROID_D8_DIR)
+	@adb push int64_average_64.{js,wasm} $(ANDROID_D8_DIR)
+	@adb push double_average.{js,wasm} $(ANDROID_D8_DIR)
+	@adb push double_average_64.{js,wasm} $(ANDROID_D8_DIR)
+	adb shell 'cd $(ANDROID_D8_DIR) && ./d8 $(D8_FLAGS) $(ANDROID_D8_DIR)/matrix_multiply_intrinsics.js'
+	adb shell 'cd $(ANDROID_D8_DIR) && ./d8 $(D8_FLAGS) $(ANDROID_D8_DIR)/$(MANDELBROT_SCALAR_OUT) -- $(MANDELBROT_W_H)'
+	adb shell 'cd $(ANDROID_D8_DIR) && ./d8 $(D8_FLAGS) $(ANDROID_D8_DIR)/$(MANDELBROT_SIMD_OUT) -- $(MANDELBROT_W_H)'
+	adb shell 'cd $(ANDROID_D8_DIR) && ./d8 $(D8_FLAGS) $(ANDROID_D8_DIR)/double_sum.js'
+	adb shell 'cd $(ANDROID_D8_DIR) && ./d8 $(D8_FLAGS) $(ANDROID_D8_DIR)/double_sum_64.js'
+	adb shell 'cd $(ANDROID_D8_DIR) && ./d8 $(D8_FLAGS) $(ANDROID_D8_DIR)/int64_average.js'
+	adb shell 'cd $(ANDROID_D8_DIR) && ./d8 $(D8_FLAGS) $(ANDROID_D8_DIR)/int64_average_64.js'
+	adb shell 'cd $(ANDROID_D8_DIR) && ./d8 $(D8_FLAGS) $(ANDROID_D8_DIR)/double_average.js'
+	adb shell 'cd $(ANDROID_D8_DIR) && ./d8 $(D8_FLAGS) $(ANDROID_D8_DIR)/double_average_64.js'
