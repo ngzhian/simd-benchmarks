@@ -13,13 +13,14 @@ double emscripten_get_now() {
 
 
 double bench(double arr[]) {
-  double sum = 0.0;
+  double sum[2] = {0.0, 0.0};
 
-  for (int i = 0; i < SIZE; i++) {
-    sum += arr[i];
+  for (int i = 0; i < SIZE; i+=2) {
+    sum[0] += arr[i];
+    sum[1] += arr[i+1];
   }
 
-  return (sum/SIZE);
+  return ((sum[0]+sum[1])/SIZE);
 }
 
 int main() {
