@@ -62,6 +62,8 @@ SCALAR_OPTS=-DMANDELBROT_SCALAR=1
 MANDELBROT_SRC=mandelbrot-game.cpp
 MANDELBROT_SCALAR_OUT=mandelbrot-game-scalar.js
 MANDELBROT_SIMD_OUT=mandelbrot-game-simd.js
+# width and height, useful for benchmarks that run slow
+MANDELBROT_W_H ?= 16000
 
 .PHONY: mandelbrot-game
 mandelbrot-game: $(MANDELBROT_SRC)
@@ -73,10 +75,11 @@ mandelbrot.bench: run-mandelbrot-game
 # Run the mandelbrot set benchmark to get the timings
 .PHONY: run-mandelbrot-game
 run-mandelbrot-game: mandelbrot-game
+	@echo --- mandelbrot
 	@./wasm-simd-dis.sh $(MANDELBROT_SCALAR_OUT:.js=.wasm)
 	@./wasm-simd-dis.sh $(MANDELBROT_SIMD_OUT:.js=.wasm)
-	@$(D8) $(D8_FLAGS) $(MANDELBROT_SCALAR_OUT)
-	@$(D8) $(D8_FLAGS) $(MANDELBROT_SIMD_OUT)
+	@$(D8) $(D8_FLAGS) $(MANDELBROT_SCALAR_OUT) -- $(MANDELBROT_W_H)
+	@$(D8) $(D8_FLAGS) $(MANDELBROT_SIMD_OUT) -- $(MANDELBROT_W_H)
 
 .PHONY: mandelbrot-game-gen-image
 mandelbrot-game-gen-image: $(MANDELBROT_SRC)
