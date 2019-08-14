@@ -1,5 +1,3 @@
 *.tmp
-*.js
-*.wasm
 *.wat
 *.pbm
