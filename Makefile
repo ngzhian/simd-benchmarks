@@ -1,3 +1,13 @@
+# options when source code uses benchmark
+BENCHMARK_DIR=../benchmark
+BENCHMARK_INCLUDE=$(BENCHMARK_DIR)/include
+BENCHMARK_LIB=$(BENCHMARK_DIR)/build/src/libbenchmark.a
+BENCHMARK_OPTS=-I$(BENCHMARK_INCLUDE) $(BENCHMARK_LIB)
+
+EIGEN_DIR=../eigen-git-mirror
+EIGEN_INCLUDE=$(EIGEN_DIR)
+EIGEN_OPTS=-I$(EIGEN_INCLUDE)
+
 EMCC ?= emcc
 EMCC_OPTS=-O3
 D8 ?= d8
@@ -134,3 +144,14 @@ run-android-arm64:
 	adb shell 'cd $(ANDROID_D8_DIR) && ./d8 $(D8_FLAGS) $(ANDROID_D8_DIR)/int64_average_64.js'
 	adb shell 'cd $(ANDROID_D8_DIR) && ./d8 $(D8_FLAGS) $(ANDROID_D8_DIR)/double_average.js'
 	adb shell 'cd $(ANDROID_D8_DIR) && ./d8 $(D8_FLAGS) $(ANDROID_D8_DIR)/double_average_64.js'
+
+.PHONY: gemm_benchmark_test
+gemm_benchmark_test: gemm_benchmark_test.cc
+	@$(EMCC) $(EMCC_OPTS) $(EIGEN_OPTS) $(BENCHMARK_OPTS) -std=c++17 $< -o $@.js
+	@$(EMCC) $(EMCC_OPTS) $(EIGEN_OPTS) $(BENCHMARK_OPTS) $(SIMD_64_OPTS) -std=c++17 $< -o $@_unimplemented.js
+	@echo --- $@
+	@./wasm-simd-dis.sh $@.wasm
+	@$(D8) $@.js
+	@./wasm-simd-dis.sh $@_unimplemented.wasm
+	@$(D8) $(D8_FLAGS) $@_unimplemented.js
+	@echo

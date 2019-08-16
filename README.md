@@ -6,7 +6,7 @@ Emscripten.
 
 ## Results
 
-x64 (Xeon(R) E5 28 cores)
+### x64 (Xeon(R) E5 28 cores)
 
 benchmark       | scalar (ms) | simd (ms)
 --------------- | ----------- | -----------
@@ -16,7 +16,22 @@ double_sum      | 2713.226000 | 1678.963000
 int64_average   | 1561.061000 | 859.337000
 double_average  | 1580.352000 | 1052.753000
 
-arm64 (Pixel 3, sdm845)
+gemm_benchmark_test (excerpt):
+
+```
+Comparing ../lapack/gemm_benchmark_test.json to ../lapack/gemm_benchmark_test_unimplemented.json
+Benchmark                      Time             CPU      Time Old      Time New       CPU Old       CPU New
+-----------------------------------------------------------------------------------------------------------
+BM_DGEMM/3                  -0.0360         -0.0360            97            93            97            93
+BM_DGEMM/7                  +0.0389         +0.0389           484           503           484           503
+BM_DGEMM/31                 -0.2598         -0.2598         17291         12799         17291         12799
+BM_DGEMM/100                -0.4010         -0.4010        544508        326154        544509        326154
+BM_DGEMM/150                -0.3985         -0.3985       1820423       1095016       1820426       1095017
+BM_DGEMM/200                -0.3629         -0.3629       4482777       2855894       4482790       2855898
+BM_DGEMM/600                -0.3738         -0.3738     118694833      74328555     118695167      74328889
+```
+
+### arm64 (Pixel 3, sdm845)
 
 benchmark       | scalar (ms)  | simd (ms)
 --------------- | ------------ | ------------
@@ -25,6 +40,21 @@ mandelbrot      | 10891.265000 | 11661.831000
 double_sum      | 5204.213000  | 2819.051000
 int64_average   | 2633.133000  | 1331.012000
 double_average  | 2468.422000  | 1537.558000
+
+gemm_benchmark_test (excerpt):
+
+```
+Comparing ../lapack/results/arm64_gemm_benchmark_test.json to ../lapack/results/arm64_gemm_benchmark_test_unimplemented.json
+Benchmark                      Time             CPU      Time Old      Time New       CPU Old       CPU New
+-----------------------------------------------------------------------------------------------------------
+BM_DGEMM/3                  +0.0003         +0.0003           322           322           322           322
+BM_DGEMM/7                  -0.0661         -0.0661          1674          1563          1674          1563
+BM_DGEMM/31                 -0.2194         -0.2194         62874         49078         62875         49078
+BM_DGEMM/100                -0.2694         -0.2694       1901978       1389584       1901984       1389590
+BM_DGEMM/150                -0.2729         -0.2729       6489519       4718500       6489546       4718507
+BM_DGEMM/200                -0.2764         -0.2764      15284304      11059603      15284457      11059730
+BM_DGEMM/600                -0.2762         -0.2762     415962001     301087500     415968500     301094000
+```
 
 ## Benchmarks
 
