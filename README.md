@@ -130,18 +130,6 @@ result: 8191.500000
 
 ## Distribution of instructions
 
-A one-liner to dump 64x2 instructions used:
-
-```
-wasm-objdump -d matrix_multiply_intrinsics.wasm | awk '/64x2/ { a = substr($0, index($0, "|") + 1); sub(/ +/, "", a); print a;}' | sort | uniq -c
-```
-
-For matrix_multiply:
-
-24 f64x2.add 32 f64x2.mul 8 f64x2.replace_lane 1 8 f64x2.splat
-
-## Distribution of instructions
-
 A one-liner to dump 64x2 instructions used in benchmarks:
 
 ```
