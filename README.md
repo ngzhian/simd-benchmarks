@@ -128,6 +128,52 @@ timing: 1052.753000
 result: 8191.500000
 ```
 
+There is another benchmark for running
+[SIMD-oriented Fast Mersenne Twister(SFMT)](http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/SFMT/index.html).
+A Wasm port is available [here](https://github.com/penzn/dSFMT-wasm). To run the
+test:
+
+```
+$ make emcc-std emcc-simd
+$ d8 --experimental-wasm-simd test-simd128-M19937.js -- -s
+consumed time for generating 100000000 randoms.
+ST BLOCK [0, 1) AVE: 125ms.
+ST BLOCK (0, 1] AVE: 120ms.
+ST BLOCK (0, 1) AVE: 120ms.
+ST BLOCK [1, 2) AVE: 105ms.
+ST SEQ [0, 1) 1 AVE: 415ms.
+ST SEQ [0, 1) 2 AVE: 309ms.
+total = 500014655.815776
+ST SEQ (0, 1] 1 AVE: 413ms.
+ST SEQ (0, 1] 2 AVE: 317ms.
+total = 500035344.184224
+ST SEQ (0, 1) 1 AVE: 384ms.
+ST SEQ (0, 1) 2 AVE: 317ms.
+total = 500014655.815776
+ST SEQ [1, 2) 1 AVE: 404ms.
+ST SEQ [1, 2) 2 AVE: 304ms.
+total = 1500064655.815183
+
+$ d8 test-std-M19937.js -- -s
+consumed time for generating 100000000 randoms.
+ST BLOCK [0, 1) AVE: 199ms.
+ST BLOCK (0, 1] AVE: 197ms.
+ST BLOCK (0, 1) AVE: 207ms.
+ST BLOCK [1, 2) AVE: 171ms.
+ST SEQ [0, 1) 1 AVE: 451ms.
+ST SEQ [0, 1) 2 AVE: 355ms.
+total = 500014655.815776
+ST SEQ (0, 1] 1 AVE: 452ms.
+ST SEQ (0, 1] 2 AVE: 362ms.
+total = 500035344.184224
+ST SEQ (0, 1) 1 AVE: 421ms.
+ST SEQ (0, 1) 2 AVE: 354ms.
+total = 500014655.815776
+ST SEQ [1, 2) 1 AVE: 447ms.
+ST SEQ [1, 2) 2 AVE: 354ms.
+total = 1500064655.815183
+```
+
 ## Distribution of instructions
 
 A one-liner to dump 64x2 instructions used in benchmarks:
