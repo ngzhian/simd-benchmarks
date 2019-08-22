@@ -4,6 +4,10 @@ Reusing some [benchmarks][1] from [this paper][0] and elsewhere ported to cpp
 and using 64 bit types (uint64 and double), compiled down to Wasm using
 Emscripten.
 
+Also see
+[slides](https://docs.google.com/presentation/d/1WNtU2VZuKSAx-RHwsFlZH-rrWiuf4BiAp4GK8CiolkA/edit#slide=id.p)
+presented at CG-08-20 summarizing results.
+
 ## Results
 
 ### x64 (Xeon(R) E5 28 cores)
