@@ -183,25 +183,26 @@ total = 1500064655.815183
 A one-liner to dump 64x2 instructions used in benchmarks:
 
 ```
-$ wasm-objdump -d matrix_multiply_intrinsics.wasm mandelbrot-game-simd.wasm double_sum_64.wasm int64_average_64.wasm double_average_64.wasm | awk '/64x2/ { a = substr($0, index($0, "|") + 1); sub(/ +/, "", a); print a;}' | sort | uniq -c | sort -rn
+$ wasm-objdump -d test-simd128-M19937.wasm matrix_multiply_intrinsics.wasm mandelbrot-game-simd.wasm double_sum_64.wasm int64_average_64.wasm double_average_64.wasm | awk '/64x2/ { a = substr($0, index($0, "|") + 1); sub(/ +/, "", a); print a;}' | sort | uniq -c | sort -rn
     193 f64x2.mul
-    182 f64x2.add
-     48 f64x2.sub
-     15 f64x2.splat
-     12 i64x2.splat
+    188 f64x2.add
+     51 f64x2.sub
+     26 i64x2.shl
+     24 f64x2.splat
+     23 i64x2.shr_u
+     17 i64x2.splat
      11 f64x2.replace_lane 1
       9 f64x2.extract_lane 1
       9 f64x2.extract_lane 0
       8 i64x2.replace_lane 1
+      6 i64x2.add
+      4 i64x2.extract_lane 0
       4 i64x2.any_true
-      4 i64x2.add
       3 i64x2.shr_s
-      3 i64x2.shl
       3 i64x2.extract_lane 1
-      3 i64x2.extract_lane 0
 ```
 
-[0]: McCutchan, John, et al. "A SIMD programming model for Dart, JavaScript,
+\[0]: McCutchan, John, et al. "A SIMD programming model for Dart, JavaScript,
 and other dynamically typed scripting languages." Proceedings of the 2014
 Workshop on Programming models for SIMD/Vector processing. ACM, 2014.
 
