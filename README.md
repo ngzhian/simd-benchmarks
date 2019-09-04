@@ -35,6 +35,23 @@ BM_DGEMM/200                -0.3629         -0.3629       4482777       2855894 
 BM_DGEMM/600                -0.3738         -0.3738     118694833      74328555     118695167      74328889
 ```
 
+SFMT:
+
+test                | scalar (ms) | simd (ms)
+------------------- | ----------- | ---------
+ST BLOCK [0, 1) AVE | 199ms       | 125ms
+ST BLOCK (0, 1] AVE | 197ms       | 120ms
+ST BLOCK (0, 1) AVE | 207ms       | 120ms
+ST BLOCK [1, 2) AVE | 171ms       | 105ms
+ST SEQ [0, 1) 1 AVE | 451ms       | 415ms
+ST SEQ [0, 1) 2 AVE | 355ms       | 309ms
+ST SEQ (0, 1] 1 AVE | 452ms       | 413ms
+ST SEQ (0, 1] 2 AVE | 362ms       | 317ms
+ST SEQ (0, 1) 1 AVE | 421ms       | 384ms
+ST SEQ (0, 1) 2 AVE | 354ms       | 317ms
+ST SEQ [1, 2) 1 AVE | 447ms       | 404ms
+ST SEQ [1, 2) 2 AVE | 354ms       | 304ms
+
 ### arm64 (Pixel 3, sdm845)
 
 benchmark       | scalar (ms)  | simd (ms)
@@ -59,6 +76,24 @@ BM_DGEMM/150                -0.2729         -0.2729       6489519       4718500 
 BM_DGEMM/200                -0.2764         -0.2764      15284304      11059603      15284457      11059730
 BM_DGEMM/600                -0.2762         -0.2762     415962001     301087500     415968500     301094000
 ```
+
+SFMT:
+
+test                | scalar (ms) | simd (ms)
+------------------- | ----------- | ---------
+
+ST BLOCK [0, 1) AVE | 371ms       | 286ms
+ST BLOCK (0, 1] AVE | 363ms       | 284ms
+ST BLOCK (0, 1) AVE | 382ms       | 312ms
+ST BLOCK [1, 2) AVE | 298ms       | 268ms
+ST SEQ [0, 1) 1 AVE | 914ms       | 830ms
+ST SEQ [0, 1) 2 AVE | 975ms       | 893ms
+ST SEQ (0, 1] 1 AVE | 921ms       | 838ms
+ST SEQ (0, 1] 2 AVE | 975ms       | 894ms
+ST SEQ (0, 1) 1 AVE |1067ms       | 985ms
+ST SEQ (0, 1) 2 AVE | 984ms       | 906ms
+ST SEQ [1, 2) 1 AVE | 912ms       | 837ms
+ST SEQ [1, 2) 2 AVE | 979ms       | 881ms
 
 ## Benchmarks
 
