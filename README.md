@@ -81,7 +81,6 @@ SFMT:
 
 test                | scalar (ms) | simd (ms)
 ------------------- | ----------- | ---------
-
 ST BLOCK [0, 1) AVE | 371ms       | 286ms
 ST BLOCK (0, 1] AVE | 363ms       | 284ms
 ST BLOCK (0, 1) AVE | 382ms       | 312ms
