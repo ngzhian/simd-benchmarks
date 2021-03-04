@@ -18,7 +18,7 @@ all: bench
 
 .PRECIOUS: %.js %_32.js %_64.js %_intrinsics.js
 
-SIMD_OPTS=-s SIMD=1
+SIMD_OPTS=-msimd128
 SIMD_64_OPTS=$(SIMD_OPTS) -munimplemented-simd128
 
 # APPS=double_average
